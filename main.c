@@ -7,25 +7,35 @@
 */
 int main(int argc, char *argv[])
 {
-	pid_t pid = fork();
+	pid_t pid;
+	char *filename = argv[0];
+	char **cmd = NULL;
 
 	(void)argc;
 
-	if (pid == -1)
+	while(1)
 	{
-		return (-1);
-	}
+		cmd = prompt();
 
-	if (pid == 0)
-	{
-		while(1)
+		if (access(cmd[0], X_OK) != 0)
 		{
-			shell(argv[0]);
+			perror(filename);
+			break;
 		}
-	} else
-	{
-		wait(NULL);
-		// shell();
-		printf("Done with execve\n");
+
+		pid = fork();
+
+		if (pid == -1)
+		{
+			return (-1);
+		}
+		if (pid == 0)
+		{
+			while(1)
+				shell(cmd, filename);
+		} else
+		{
+			wait(NULL);
+		}
 	}
 }
