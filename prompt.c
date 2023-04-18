@@ -22,6 +22,17 @@ char **prompt()
 
 	cmd[strlen(cmd) - 1] = '\0';
 
+	if (strcmp(cmd, "exit") == 0)
+	{
+		exit(0);
+	}
+
+	if (strcmp(cmd, "env") == 0)
+	{
+		args[0] = "/usr/bin/env";
+		return (args);
+	}
+
 	token = strtok(cmd, delim);
 
 	while(token != NULL)
