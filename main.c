@@ -17,7 +17,8 @@ int main(int argc, char *argv[])
 	{
 		cmd = prompt();
 
-		if (access(cmd[0], X_OK) != 0)
+		/* here code checks whether an executable really does exist*/
+		if (cmd[0] == NULL || access(cmd[0], X_OK) != 0)
 		{
 			perror(filename);
 			break;
@@ -27,15 +28,23 @@ int main(int argc, char *argv[])
 
 		if (pid == -1)
 		{
+			perror("fork");
 			return (-1);
 		}
+
 		if (pid == 0)
 		{
+			/* At this instance, we display the child process */
 			while(1)
 				shell(cmd, filename);
 		} else
 		{
+			/* At this instance, we display the valid parent process*/
 			wait(NULL);
 		}
+
+		/* Here we free ideally the memory allocated by the prompt() */
+		free(cmd);
 	}
+	return (0);
 }

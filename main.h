@@ -10,7 +10,7 @@
 #include <stdio.h>
 
 
-void shell(char *args[], char* filename);
+void shell(char *args[], char *filename);
 char **prompt();
 
 #endif

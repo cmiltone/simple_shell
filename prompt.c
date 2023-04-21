@@ -2,45 +2,71 @@
 
 /**
  * prompt - get user command
+ *
  * Return: command
 */
 
 char **prompt()
 {
 	char *cmd = NULL;
-	size_t n = 10;
+	/* Here we set to 0 so that we can let getline() function to allocate memory */
+	size_t n = 0;
 	char *token;
-	char *delim = " ";
-	char **args = malloc(sizeof(char *) * n);
+	char *delim = " \t\n\r ";
+	char **args = NULL;
 	int k = 0;
 	char *promt_str = "#cisfun$ ";
 	int j = strlen(promt_str);
-  
-  write(1, promt_str, j);
+  /* Here we do print the prompts */
+  write(STDOUT_FILENO, promt_str, j);
 
-  getline(&cmd, &n, stdin);
+  /* At this instance here, we read the user input*/
+  if (getline(&cmd, &n, stdin) == -1)
+		  {
+		  perror("getline");
+		  exit(EXIT_FAILURE);
+		  }
+  /* Here we remove the newline character*/
 
-	cmd[strlen(cmd) - 1] = '\0';
+	cmd[strcspn(cmd, "\n")] = '\0';
 
-	if (strcmp(cmd, "exit") == 0)
+	/* Now here we allocate memory accordingly*/
+	args = malloc(sizeof(char *));
+
+	if (args == NULL)
 	{
-		exit(0);
+		perror("malloc");
+		exit(EXIT_FAILURE);
 	}
 
-	if (strcmp(cmd, "env") == 0)
-	{
-		args[0] = "/usr/bin/env";
-		return (args);
-	}
-
+	/* Here the concept of tokenization comes in handy*/
 	token = strtok(cmd, delim);
 
 	while(token != NULL)
 	{
 		args[k] = token;
 		k += 1;
-		token = strtok(NULL, delim);
+
+	if (token == NULL)
+	{
+		args = realloc(args, sizeof(char *) * (k + 1));
+		if (args == NULL)
+		{
+			perror("realloc");
+			exit(EXIT_FAILURE);
+		}
 	}
+	token = strtok(NULL, delim);
+	}
+	args[k] = NULL;
+
+	/* Here we check if cmd is not NULL prior to freeing it*/
+	if (cmd != NULL)
+	{
+		free(cmd);
+	}
+	/* Here we free the memory that we allocated for the user's own input*/
+	free(cmd);
 
 	return (args);
 }
