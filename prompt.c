@@ -12,13 +12,16 @@ char **prompt()
 	char *token;
 	char *delim = " ";
 	char **args = malloc(sizeof(char *) * n);
-	int k = 0;
+	int r, k = 0;
 	char *promt_str = "#cisfun$ ";
 	int j = strlen(promt_str);
   
   write(1, promt_str, j);
 
-  getline(&cmd, &n, stdin);
+  r = getline(&cmd, &n, stdin);
+
+	if (r == -1)
+		exit(0);
 
 	cmd[strlen(cmd) - 1] = '\0';
 

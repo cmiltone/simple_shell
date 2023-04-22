@@ -20,23 +20,19 @@ int main(int argc, char *argv[])
 		if (access(cmd[0], X_OK) != 0)
 		{
 			perror(filename);
-			break;
+			continue;
 		}
 
 		pid = fork();
-
 		if (pid == -1)
 		{
+			perror(filename);
 			return (-1);
 		}
 		if (pid == 0)
-		{
-			while(1)
-				shell(cmd, filename);
-		} else
-		{
+			shell(cmd, filename);
+		else
 			wait(NULL);
-		}
 	}
 
 	return (0);
