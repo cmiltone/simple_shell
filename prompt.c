@@ -47,7 +47,7 @@ char **prompt()
 		args[k] = token;
 		k += 1;
 
-		if (token == NULL)
+		/*if (token == NULL)
 		{
 			args = realloc(args, sizeof(char *) * (k + 1));
 			if (args == NULL)
@@ -55,10 +55,10 @@ char **prompt()
 				perror("realloc");
 				exit(EXIT_FAILURE);
 			}
-		}
+		}*/
 		token = strtok(NULL, delim);
 	}
-	args[k] = NULL;
+	/*args[k] = NULL;*/
 
 	/* Here we check if cmd is not NULL prior to freeing it*/
 	/*if (cmd != NULL)
