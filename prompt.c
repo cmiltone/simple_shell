@@ -65,8 +65,5 @@ char **prompt()
 	{
 		free(cmd);
 	}
-	/* Here we free the memory that we allocated for the user's own input*/
-	free(cmd);
-
 	return (args);
 }
