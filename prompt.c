@@ -47,26 +47,26 @@ char **prompt()
 		args[k] = token;
 		k += 1;
 
-	if (token == NULL)
-	{
-		args = realloc(args, sizeof(char *) * (k + 1));
-		if (args == NULL)
+		if (token == NULL)
 		{
-			perror("realloc");
-			exit(EXIT_FAILURE);
+			args = realloc(args, sizeof(char *) * (k + 1));
+			if (args == NULL)
+			{
+				perror("realloc");
+				exit(EXIT_FAILURE);
+			}
 		}
-	}
-	token = strtok(NULL, delim);
+		token = strtok(NULL, delim);
 	}
 	args[k] = NULL;
 
 	/* Here we check if cmd is not NULL prior to freeing it*/
-	if (cmd != NULL)
+	/*if (cmd != NULL)
 	{
 		free(cmd);
-	}
+	}freeing cmd makes arg[0] 'NULL'*/
 	/* Here we free the memory that we allocated for the user's own input*/
-	free(cmd);
+	/*free(cmd); avoid freeing twice*/
 
 	return (args);
 }
