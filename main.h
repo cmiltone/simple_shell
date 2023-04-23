@@ -12,5 +12,6 @@
 
 void shell(char *args[], char* filename);
 char **prompt();
+int str_len(char *s);
 
 #endif

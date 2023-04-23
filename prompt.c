@@ -14,7 +14,7 @@ char **prompt()
 	char **args = malloc(sizeof(char *) * n);
 	int r, k = 0;
 	char *promt_str = "#cisfun$ ";
-	int j = strlen(promt_str);
+	int j = str_len(promt_str);
   
   write(1, promt_str, j);
 
@@ -23,7 +23,7 @@ char **prompt()
 	if (r == -1)
 		exit(0);
 
-	cmd[strlen(cmd) - 1] = '\0';
+	cmd[str_len(cmd) - 1] = '\0';
 
 	if (strcmp(cmd, "exit") == 0)
 	{
