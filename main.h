@@ -13,5 +13,6 @@
 void shell(char *args[], char* filename);
 char **prompt();
 int str_len(char *s);
+int str_cmp(char * a, char *b);
 
 #endif

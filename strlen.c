@@ -1,5 +1,3 @@
-#include "main.h"
-
 /**
  * str_len - gets length of input string
  * 
