@@ -8,14 +8,15 @@
  * Return: the pointer is returned to the destination string
  */
 
-char *teamstrncpy(char *dest, char *src, int n)
+char *teamstrncpy(char *dest, char *src, size_t n)
 {
 	char *s = dest;
+	size_t i,j;
 	/*
 	 * here it copies characters from the source to destination until
 	 * n or rather '\0' is reached
 	 */
-	for (int i = 0; src[i] != '\0' && i < n -1; i++)
+	for (i = 0; src[i] != '\0' && i < n -1; i++)
 		dest[i] = src[i];
 
 	/*
@@ -23,10 +24,23 @@ char *teamstrncpy(char *dest, char *src, int n)
 	 * sequence in desination with null bytes
 	 */
 	if (_strlen(src) < n)
-		for (int j = _strlen(src); j < n; j++)
+		for (j = _strlen(src); j < n; j++)
 			dest[j] = '\0';
 
 	return (s);
+}
+/**
+ * _strlen - The function here calculates the length of a string
+ * @s: This is the string to be calculated
+ *
+ * Return: This is the length of the string
+ */
+size_t _strlen(char *s)
+{
+	size_t i;
+	for (i = 0; s[i] != '\0'; i++)
+		;
+	return i;
 }
 
 /**
@@ -58,7 +72,7 @@ char *teamstrncat(char *dest, char *src, int n)
 	 * if the source is less than n, we add a null byte at the ened of
 	 * the string
 	 */
-	if (_strlen(src) < n)
+	if (_strlen(src) < (size_t)n)
 		dest[i] = '\0';
 
 	return (s);
