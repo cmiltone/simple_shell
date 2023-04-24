@@ -70,15 +70,17 @@ char **get_path_cmds()
 */
 char *get_command_in_path(char *cmd)
 {
-	char *full, **files = get_path_cmds();
-	int k;
+	char *full, *file, **files = get_path_cmds();
+	int k, i = 0;
 
-	while(*files != NULL)
+	while(files[i] != NULL)
 	{
-		full = str_cat(*files++, str_cat("/", cmd));
+		file = files[i];
+		full = str_cat(file, str_cat("/", cmd));
 		k = access(full, X_OK);
 		if (k == 0)
 			return (full);
+		i += 1;
 	}
 
 	free(files);
