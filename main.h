@@ -32,5 +32,6 @@ char *get_env(char *e);
 char **get_path_cmds();
 char *get_command_in_path(char *cmd);
 char *str_cat(char *a, char *b);
+ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 
 #endif
