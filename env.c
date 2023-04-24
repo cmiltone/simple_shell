@@ -10,14 +10,16 @@
 char *get_env(char *env)
 {
 	char *e, *token, *delim = "=";
+	int k = 0;
 
-	while(*__environ)
+	while(__environ[k] != NULL)
 	{
-		e = *__environ++;
+		e = str_cat("", __environ[k]);
 		token = strtok(e, delim);
 
 		if (str_cmp(token, env) == 0)
 			return strtok(NULL, delim);
+		k += 1;
 	}
 
 	return "";
@@ -55,6 +57,8 @@ char **get_path_cmds()
 		i += 1;
 	}
 
+	free(token);
+
 	return (tokens);
 }
 
@@ -76,6 +80,8 @@ char *get_command_in_path(char *cmd)
 		if (k == 0)
 			return (full);
 	}
+
+	free(files);
 
 	return (NULL);
 }
