@@ -46,5 +46,33 @@ int main(int argc, char *argv[])
 		/* Here we free ideally the memory allocated by the prompt() */
 		free(cmd);
 	}
-	return (0);
+
+	/* To handle exit */
+int main (int args __attribute__((unused)), char **argv, char **env)
+{
+	int should_free = 0;
+	info_t info = {NULL, env, 0, 0};
+	char *line =NULL;
+
+	info.argv = argv;
+
+	while (1)
+	{
+		write(STDOUT_FILENO, "$ ", 2);
+		line = read_line(&should_free);
+		if (line == NULL)
+			break;
+		execute_command(&info);
+		while (should_free)
+		{
+			free(line);
+			should_free--;
+		}
+	}
+
+	exit(info.status);
 }
+	return (0);
+
+
+

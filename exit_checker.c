@@ -11,12 +11,12 @@
 char *teamstrncpy(char *dest, char *src, size_t n)
 {
 	char *s = dest;
-	size_t i,j;
+	size_t i, j;
 	/*
 	 * here it copies characters from the source to destination until
 	 * n or rather '\0' is reached
 	 */
-	for (i = 0; src[i] != '\0' && i < n -1; i++)
+	for (i = 0; src[i] != '\0' && i < n - 1; i++)
 		dest[i] = src[i];
 
 	/*
@@ -38,9 +38,10 @@ char *teamstrncpy(char *dest, char *src, size_t n)
 size_t _strlen(char *s)
 {
 	size_t i;
+
 	for (i = 0; s[i] != '\0'; i++)
 		;
-	return i;
+	return (i);
 }
 
 /**
@@ -87,16 +88,17 @@ char *teamstrncat(char *dest, char *src, int n)
  */
 char *teamstrchr(char *s, char c)
 {
-	/* this loops through out the string untiil c is found or end
+	/*
+	 * this loops through out the string untiil c is found or end
 	 * of string is reached
 	 */
 	while (*s)
 	{
 		if (*s == c)
 		{
-			return s;
+			return (s);
 		}
 		s++;
 	}
-	return NULL;
+	return (NULL);
 }
