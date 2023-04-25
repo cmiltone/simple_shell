@@ -21,9 +21,12 @@ char **prompt()
   r = _getline(&cmd, &n, stdin);
 
 	if (r == -1)
-		exit(0);
-
+		return(NULL);
+		
 	cmd[str_len(cmd) - 1] = '\0';
+
+	if (str_len(cmd) == 0)
+		return (NULL);
 
 	token = strtok(cmd, delim);
 

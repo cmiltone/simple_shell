@@ -33,6 +33,10 @@ void shell(char *filename)
 	while(1)
 	{
 		cmd = prompt();
+		if (cmd == NULL)
+		{
+			break; /*maybe exit?*/
+		}
 
 		if (access(cmd[0], X_OK) != 0)
 		{

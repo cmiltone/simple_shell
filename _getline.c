@@ -18,12 +18,15 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
   if (stream != NULL)
     k = read(STDIN_FILENO, buff, *n);
 
-  buff[str_len(buff)] = '\0';
-
-  lineptr[0] = buff;
-
   if (k  == 0)
     return (-1);
+
+  if (str_len(buff) > 0)
+  {
+    buff[str_len(buff)] = '\0';
+
+    lineptr[0] = buff;
+  }
   
   return str_len(buff);
 }
