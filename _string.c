@@ -48,7 +48,7 @@ size_t str_len(char *s)
  * @a: string
  * @b: string
  *
- * Return - 1 or 0
+ * Return: 1 or 0
  *
 */
 
