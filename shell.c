@@ -55,15 +55,6 @@ void shell(char *filename)
 			_exit(1); /*TODO: fix bug*/
 		}
 
-		if (access(cmd[0], X_OK) != 0)
-		{
-			cmd[0] = get_command_in_path(cmd[0]);
-			if (cmd[0] == NULL)
-			{
-				perror(filename);
-				continue;
-			}
-		}
 		exec_command(cmd, filename);
 	}
 }

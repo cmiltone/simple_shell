@@ -41,7 +41,7 @@ char **tokenizer(char *str, const char *delimiter)
 
 int check_builtin(char **args)
 {
-	if (strcmp(args[0], "exit") == 0)
+	if (str_cmp(args[0], "exit") == 0)
 	{
 		if (args[1] != NULL)
 		{
@@ -50,11 +50,12 @@ int check_builtin(char **args)
 			exit(exit_status);
 		}
 		else
-	{
-		exit(0);
+		{
+			exit(0);
+		}
+		return (1);
 	}
-	}
-	else if (strcmp(args[0], "env") == 0)
+	else if (str_cmp(args[0], "env") == 0)
 	{
 		print_env();
 		return (1);
