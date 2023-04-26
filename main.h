@@ -9,14 +9,6 @@
 #include <sys/wait.h>
 #include <stdio.h>
 
-/**
- * #ifdef _WIN32
- * #define PATH_SEPARATOR ";"
- * #else
- * #define PATH_SEPARATOR ":"
- * #endif
-*/
-
 #ifdef _WIN32
   #define ON_WIN 1
 #else
