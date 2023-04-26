@@ -10,7 +10,9 @@
 void exec_command(char *args[], char *filename)
 {
 	char *cmd = args[0];
-	int k = execve(cmd, args, environ);
+	int k;
+
+	k = execve(cmd, args, environ);
 
 	if (k == -1)
 	{
@@ -28,32 +30,12 @@ void exec_command(char *args[], char *filename)
 void shell(char *filename)
 {
 	pid_t pid;
-	char **cmd = NULL, *str, *s;
+	char **cmd = NULL;
 	int status;
 
 	while (1)
 	{
 		cmd = prompt();
-		if (cmd == NULL)
-		{
-			if (isatty(STDIN_FILENO))
-				write(STDOUT_FILENO, "\n", 2);
-			break; /*maybe exit?*/
-		}
-		if (check_builtin(cmd) == 1)
-			continue;
-		else if (access(cmd[0], X_OK) != 0)
-		{
-			s = cmd[0];
-			cmd[0] = get_command_in_path(cmd[0]);
-			if (cmd[0] == NULL)
-			{
-				str = str_cat(filename, ": 1: ");
-				str = str_cat(str, str_cat(s, ": not found\n"));
-				write(STDOUT_FILENO, str, str_len(str));
-				continue;
-			}
-		}
 		pid = fork();
 		if (pid > 0)
 			waitpid(pid, &status, 0);
