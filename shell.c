@@ -10,7 +10,7 @@
 void exec_command(char *args[], char *filename)
 {
 	char *cmd = args[0];
-  int k = execve(cmd, args, __environ);
+	int k = execve(cmd, args, __environ);
 
 	if (k == -1)
 		perror(filename);
