@@ -1,6 +1,9 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+/* Global */
+extern char **environ;
+
 /* Libraries */
 #include <stdio.h>
 #include <stdlib.h>

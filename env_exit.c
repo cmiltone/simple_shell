@@ -120,8 +120,8 @@ int check_builtin(char **args)
 
 void print_env(void)
 {
-	extern char **environ;
 	int i = 0;
+
 	while (environ[i] != NULL)
 	{
 		printf("%s\n", environ[i]);

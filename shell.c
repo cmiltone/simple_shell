@@ -14,7 +14,6 @@ void shell(char *args[], char *filename)
 if (args == NULL || args[0] == NULL)
 {
 	perror(filename);
-	return;
 }
 cmd = args[0];
 k = execve(cmd, args, NULL);
