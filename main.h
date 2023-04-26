@@ -18,7 +18,7 @@
 void shell(char *filename);
 void exec_command(char *args[], char *filename);
 char **prompt();
-int str_len(char *s);
+size_t str_len(char *s);
 int str_cmp(char *a, char *b);
 int str_contains(char *a, char *b);
 char *get_env(char *e);

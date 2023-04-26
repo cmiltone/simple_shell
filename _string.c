@@ -31,9 +31,9 @@ int str_cmp(char *a, char *b)
  *
 */
 
-int str_len(char *s)
+size_t str_len(char *s)
 {
-	int len = 0;
+	size_t len = 0;
 
 	while (s[len] != '\0')
 		len += 1;
