@@ -49,13 +49,7 @@ void shell(char *filename)
 	while (1)
 	{
 		cmd = prompt();
-		if (cmd == NULL)
-		{
-			write(STDOUT_FILENO, "\n", 1);
-			/*_exit(1); TODO: fix bug*/
-			break;
-		} else
-			exec_command(cmd, filename);
+		exec_command(cmd, filename);
 	}
 }
 
