@@ -7,51 +7,54 @@
  * Return: 0 on error else 1
 */
 
-int exec_command(char *args[], char *filename)
+void exec_command(char *args[], char *filename)
 {
 	char *cmd = args[0];
 	int k;
-	pid_t pid;
-	int status;
 
-	if ((pid = fork()) < 0)
+	k = execve(cmd, args, environ);
+
+	if (k == -1)
 	{
 		perror(filename);
-		return (0);
+		free((*args));
 	}
-	else if (pid == 0)
-	{
-		k = execve(cmd, args, environ);
-
-		if (k == -1)
-		{
-			perror(filename);
-			free((*args));
-			return (0);
-		}
-	}
-	else
-		waitpid(pid, &status, 0);
-
-	return (1);
 }
 
 /**
- * shell - starts interractive shell
+ * shell - starts interractive/non-interractive shell
  * @filename: name of the executable file
  * Return: void
 */
 
 void shell(char *filename)
 {
+	pid_t pid;
 	char **cmd = NULL;
+	int status;
 
 	while (1)
 	{
 		cmd = prompt();
-		exec_command(cmd, filename);
+		if (cmd == NULL)
+		{
+			break;
+		}
+		pid = fork();
+		if (pid > 0)
+			waitpid(pid, &status, 0);
+		if (pid == -1)
+		{
+			perror(filename);
+			break;
+		}
+		if (pid == 0)
+			exec_command(cmd, filename);
+		else
+			wait(0);
 	}
 }
+
 
 
 /**
