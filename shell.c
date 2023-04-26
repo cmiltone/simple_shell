@@ -37,17 +37,11 @@ void shell(char *filename)
 	{
 		cmd = prompt();
 
-		if (check_builtin(cmd) == 1)
-			continue;
-		/*else if (access(cmd[0], X_OK) != 0)
+		if (access(cmd[0], X_OK) != 0)
 		{
-			cmd[0] = get_command_in_path(cmd[0]);
-			if (cmd[0] == NULL)
-			{
-				perror(filename);
-				continue;
-			}
-		}*/
+			perror(filename);
+			continue;
+		}
 		pid = fork();
 		if (pid > 0)
 			waitpid(pid, &status, 0);
