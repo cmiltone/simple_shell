@@ -11,6 +11,7 @@ int main(int argc, char *argv[])
 {
 	(void)argc;
 
+	signal(SIGINT, &ctrl_c);
 	shell(argv[0]);
 
 	return (0);

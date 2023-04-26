@@ -10,10 +10,13 @@
 void exec_command(char *args[], char *filename)
 {
 	char *cmd = args[0];
-	int k = execve(cmd, args, __environ);
+	int k = execve(cmd, args, environ);
 
 	if (k == -1)
+	{
 		perror(filename);
+		free((*args));
+	}
 }
 
 /**
@@ -26,12 +29,16 @@ void shell(char *filename)
 {
 	pid_t pid;
 	char **cmd = NULL;
+	int status;
+	char *str = "\n";
+	int j = str_len(str);
 
 	while (1)
 	{
 		cmd = prompt();
 		if (cmd == NULL)
 		{
+			write(1, str, j);
 			break; /*maybe exit?*/
 		}
 
@@ -47,6 +54,10 @@ void shell(char *filename)
 		}
 
 		pid = fork();
+		if (pid > 0)
+		{
+			waitpid(pid, &status, 0);
+		}
 		if (pid == -1)
 		{
 			perror(filename);
@@ -56,5 +67,27 @@ void shell(char *filename)
 			exec_command(cmd, filename);
 		else
 			wait(0);
+	}
+}
+
+
+/**
+ * ctrl_c - listens for Ctrl+C then
+ * writes a newline and prompts the user again
+ *
+ * @sig: input signal to confirm is SIGINT
+ * Return: void
+*/
+
+void ctrl_c(int sig)
+{
+	char *prompt_str = "\n$ ";
+	int is_valid;
+
+	if (sig == SIGINT)
+	{
+		is_valid = isatty(STDIN_FILENO);
+		if (is_valid == 1)
+			write(STDOUT_FILENO, prompt_str, str_len(prompt_str));
 	}
 }

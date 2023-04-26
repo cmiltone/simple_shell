@@ -12,9 +12,9 @@ char *get_env(char *env)
 	char *e, *token, *delim = "=";
 	int k = 0;
 
-	while (__environ[k] != NULL)
+	while (environ[k] != NULL)
 	{
-		e = str_cat("", __environ[k]);
+		e = str_cat("", environ[k]);
 		token = strtok(e, delim);
 
 		if (str_cmp(token, env) == 0)
