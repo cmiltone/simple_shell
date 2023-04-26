@@ -36,6 +36,8 @@ void shell(char *filename)
 		cmd = prompt();
 		if (cmd == NULL)
 		{
+			if (isatty(STDIN_FILENO))
+				write(STDOUT_FILENO, "\n", 2);
 			break; /*maybe exit?*/
 		}
 
