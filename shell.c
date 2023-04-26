@@ -30,19 +30,15 @@ void shell(char *filename)
 	pid_t pid;
 	char **cmd = NULL;
 	int status;
-	char *str = "\n";
-	int j = str_len(str);
 
 	while (1)
 	{
 		cmd = prompt();
 		if (cmd == NULL)
 		{
-			write(1, str, j);
 			break; /*maybe exit?*/
 		}
 
-		/**
 		if (access(cmd[0], X_OK) != 0)
 		{
 			cmd[0] = get_command_in_path(cmd[0]);
@@ -53,7 +49,6 @@ void shell(char *filename)
 				continue;
 			}
 		}
-		*/
 
 		pid = fork();
 		if (pid > 0)

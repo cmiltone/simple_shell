@@ -16,7 +16,7 @@ char **prompt()
 	char *prompt_str = "$ ";
 	int j = str_len(prompt_str);
 
-	write(1, prompt_str, j);
+	write(STDOUT_FILENO, prompt_str, j);
 
 	r = getline(&cmd, &n, stdin);
 
