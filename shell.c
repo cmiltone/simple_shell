@@ -36,11 +36,7 @@ void shell(char *filename)
 	while (1)
 	{
 		cmd = prompt();
-
-		if (access(cmd[0], X_OK) != 0)
-		{
-			(void)pid;
-		}
+		
 		pid = fork();
 		if (pid > 0)
 			waitpid(pid, &status, 0);
