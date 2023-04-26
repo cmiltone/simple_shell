@@ -28,12 +28,12 @@ void exec_command(char *args[], char *filename)
 void shell(char *filename)
 {
 	pid_t pid;
-	char **cmd = NULL;
+	char **cmd = NULL, *str, *s;
 	int status;
 
 	while (1)
 	{
-		cmd = prompt(filename);
+		cmd = prompt();
 		if (cmd == NULL)
 		{
 			if (isatty(STDIN_FILENO))
@@ -44,10 +44,13 @@ void shell(char *filename)
 			continue;
 		else if (access(cmd[0], X_OK) != 0)
 		{
+			s = cmd[0];
 			cmd[0] = get_command_in_path(cmd[0]);
 			if (cmd[0] == NULL)
 			{
-				perror(filename);
+				str = str_cat(filename, ": 1: ");
+				str = str_cat(str, str_cat(s, ": not found\n"));
+				write(STDOUT_FILENO, str, str_len(str));
 				continue;
 			}
 		}
