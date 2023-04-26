@@ -3,7 +3,7 @@
 /**
  * get_env - gets an evironment variable
  * @env: the variable name
- * 
+ *
  * Return: the value of the varible
 */
 
@@ -12,17 +12,17 @@ char *get_env(char *env)
 	char *e, *token, *delim = "=";
 	int k = 0;
 
-	while(__environ[k] != NULL)
+	while (__environ[k] != NULL)
 	{
 		e = str_cat("", __environ[k]);
 		token = strtok(e, delim);
 
 		if (str_cmp(token, env) == 0)
-			return strtok(NULL, delim);
+			return (strtok(NULL, delim));
 		k += 1;
 	}
 
-	return "";
+	return ("");
 }
 
 /**
@@ -33,7 +33,7 @@ char *get_env(char *env)
 
 char **get_path_cmds()
 {
-	int i = 0, max =100;
+	int i = 0, max = 100;
 	char *token, **tokens = malloc(sizeof(char *) * max);
 	char *path = get_env("PATH");
 	char *delim = ":";
@@ -46,10 +46,10 @@ char **get_path_cmds()
 
 	if (ON_WIN == 1)
 		delim = ";";
-	
+
 	token = strtok(path, delim);
 
-	while (token !=NULL)
+	while (token != NULL)
 	{
 		tokens[i] = token;
 
@@ -73,7 +73,7 @@ char *get_command_in_path(char *cmd)
 	char *full, *file, **files = get_path_cmds();
 	int k, i = 0;
 
-	while(files[i] != NULL)
+	while (files[i] != NULL)
 	{
 		file = files[i];
 		full = str_cat(file, str_cat("/", cmd));
