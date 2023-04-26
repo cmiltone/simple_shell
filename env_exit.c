@@ -1,34 +1,4 @@
 #include "main.h"
-/**
- * main - the main function of the simple shell program
- *
- * Return: 0 if success
- */
-
-int main(void)
-{
-	char *buffer = NULL;
-	size_t buffer_size = 0;
-	ssize_t line_size;
-	char **args;
-
-	while (1)
-	{
-		printf("$ ");
-		line_size = getline(&buffer, &buffer_size, stdin);
-		if (line_size == -1)
-			break;
-		buffer[line_size - 1] = '\0';
-		args = tokenizer(buffer, " ");
-		if (args == NULL)
-			continue;
-		if (check_builtin(args) == 0)
-			execute(args);
-		free(args);
-	}
-	free(buffer);
-	return (0);
-}
 
 /**
  * tokenizer - to tokenize the input buffer
@@ -62,35 +32,6 @@ char **tokenizer(char *str, const char *delimiter)
 	return (tokens);
 }
 
-/**
- * execute - it executes the input command
- * @args: input command and its arguments
- *
- * Return: void
- */
-
-void execute(char **args)
-{
-	pid_t child_pid;
-	int status;
-
-	child_pid = fork();
-	if (child_pid == -1)
-	{
-		perror("Fork error");
-		return;
-	}
-	if (child_pid == 0)
-	{
-		execve(args[0], args, NULL);
-		perror("Command not found");
-		exit(EXIT_FAILURE);
-	}
-	else
-	{
-		waitpid(child_pid, &status, WUNTRACED);
-	}
-}
 /**
  * check_builtin - check if the input command is built-in
  * @args: input the command and its arguments

@@ -1,0 +1,5 @@
+.TH Simple Shell "ALX Cohort 12" "Designed APRIL 2022"
+
+.SH NAME
+
+.B simple_shell \- A replica of BASH

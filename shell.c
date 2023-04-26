@@ -1,25 +1,94 @@
 #include "main.h"
 
 /**
- * shell - starts an interrractive shell
+ * exec_command - executes a command with or without args
  * @args: command and list of arguments
  * @filename: the name of the program file
  * Return: void
 */
 
-void shell(char *args[], char *filename)
+void exec_command(char *args[], char *filename)
 {
-	char *cmd;
-	int k;
-if (args == NULL || args[0] == NULL)
-{
-	perror(filename);
-	return;
+	char *cmd = args[0];
+	int k = execve(cmd, args, environ);
+
+	if (k == -1)
+	{
+		perror(filename);
+		free((*args));
+	}
 }
-cmd = args[0];
-k = execve(cmd, args, NULL);
-if (k == -1)
+
+/**
+ * shell - starts interractive shell
+ * @filename: name of the executable file
+ * Return: void
+*/
+
+void shell(char *filename)
 {
-	perror(filename);
+	pid_t pid;
+	char **cmd = NULL;
+	int status;
+
+	while (1)
+	{
+		cmd = prompt();
+		if (cmd == NULL)
+		{
+			if (isatty(STDIN_FILENO))
+				write(STDOUT_FILENO, "\n", 2);
+			break; /*maybe exit?*/
+		}
+		
+		if (check_builtin(cmd) == 1)
+			continue;
+		else if (access(cmd[0], X_OK) != 0)
+		{
+			cmd[0] = get_command_in_path(cmd[0]);
+
+			if (cmd[0] == NULL)
+			{
+				perror(filename);
+				continue;
+			}
+		}
+
+		pid = fork();
+		if (pid > 0)
+		{
+			waitpid(pid, &status, 0);
+		}
+		if (pid == -1)
+		{
+			perror(filename);
+			break;
+		}
+		if (pid == 0)
+			exec_command(cmd, filename);
+		else
+			wait(0);
+	}
 }
+
+
+/**
+ * ctrl_c - listens for Ctrl+C then
+ * writes a newline and prompts the user again
+ *
+ * @sig: input signal to confirm is SIGINT
+ * Return: void
+*/
+
+void ctrl_c(int sig)
+{
+	char *prompt_str = "\n$ ";
+	int is_valid;
+
+	if (sig == SIGINT)
+	{
+		is_valid = isatty(STDIN_FILENO);
+		if (is_valid == 1)
+			write(STDOUT_FILENO, prompt_str, str_len(prompt_str));
+	}
 }
