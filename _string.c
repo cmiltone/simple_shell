@@ -3,18 +3,18 @@
 /**
  * str_cmp - returns 0 if two input strings are the same
  * or -1 otherwise
- * 
+ *
  * @a: first string
  * @b: second string
- * 
+ *
  * Return: integer, -1 or 0
 */
 
-int str_cmp(char * a, char *b)
+int str_cmp(char *a, char *b)
 {
-  int k = 0;
+	int k = 0;
 
-  while (a[k] != '\0' && b[k] != '\0' && a[k] == b[k])
+	while (a[k] != '\0' && b[k] != '\0' && a[k] == b[k])
 		k += 1;
 	if (a[k] == '\0' && a[k] == '\0')
 		return (0);
@@ -24,45 +24,43 @@ int str_cmp(char * a, char *b)
 
 /**
  * str_len - gets length of input string
- * 
+ *
  * @s: string
- * 
+ *
  * Return: int, length of the string
- * 
+ *
 */
 
 int str_len(char *s)
 {
-  int len = 0;
+	int len = 0;
 
 	while (s[len] != '\0')
-  {
-    len += 1;
-  }
+		len += 1;
 
-  return (len);
+	return (len);
 }
 
 /**
  * str_contains - returns 1 if string contains
  * another string or 0 therwise
- * 
+ *
  * @a: string
  * @b: string
- * 
+ *
  * Return - 1 or 0
- * 
+ *
 */
 
 int str_contains(char *a, char *b)
 {
-  int i = 0, j, k = 0;
+	int i = 0, j, k = 0;
 
 	if (str_len(a) == 0 || str_len(b) == 0)
 		return (0);
 
-  while (i < str_len(a))
-  {
+	while (i < str_len(a))
+	{
 		j = 0;
 
 		while (j < str_len(b))
@@ -78,14 +76,14 @@ int str_contains(char *a, char *b)
 		i += 1;
 	}
 
-  return (0);
+	return (0);
 }
 
 /**
  * str_cat - concatenetes two strings into one
  * @a: first string
  * @b: second string
- * 
+ *
  * Return:  string
  **/
 
