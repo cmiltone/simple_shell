@@ -36,19 +36,22 @@ void shell(char *filename)
 	while (1)
 	{
 		cmd = prompt();
-		
-		pid = fork();
-		if (pid > 0)
-			waitpid(pid, &status, 0);
-		if (pid == -1)
+
+		if (cmd != NULL)
 		{
-			perror(filename);
-			break;
+			pid = fork();
+			if (pid > 0)
+				waitpid(pid, &status, 0);
+			if (pid == -1)
+			{
+				perror(filename);
+				break;
+			}
+			if (pid == 0)
+				exec_command(cmd, filename);
+			else
+				wait(0);
 		}
-		if (pid == 0)
-			exec_command(cmd, filename);
-		else
-			wait(0);
 	}
 }
 

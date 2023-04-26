@@ -33,7 +33,7 @@ char *get_env(char *env)
 
 char **get_path_cmds()
 {
-	int i = 0, max = 100;
+	int i = 0, max = 1000;
 	char *token, **tokens = malloc(sizeof(char *) * max);
 	char *path = get_env("PATH");
 	char *delim = ":";
