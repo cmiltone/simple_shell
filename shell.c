@@ -26,15 +26,12 @@ void shell(char *filename)
 {
 	pid_t pid;
 	char **cmd = NULL;
-	char *promt_str = "\n";
-	int j = str_len(promt_str);
 
 	while (1)
 	{
 		cmd = prompt();
 		if (cmd == NULL)
 		{
-			write(1, promt_str, j);
 			break; /*maybe exit?*/
 		}
 
