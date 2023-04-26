@@ -54,7 +54,7 @@ size_t str_len(char *s)
 
 int str_contains(char *a, char *b)
 {
-	int i = 0, j, k = 0;
+	size_t i = 0, j, k = 0;
 
 	if (str_len(a) == 0 || str_len(b) == 0)
 		return (0);
