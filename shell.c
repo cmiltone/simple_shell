@@ -39,8 +39,7 @@ void shell(char *filename)
 
 		if (access(cmd[0], X_OK) != 0)
 		{
-			perror(filename);
-			continue;
+			cmd[0] = get_command_in_path(cmd[0]);
 		}
 		pid = fork();
 		if (pid > 0)
