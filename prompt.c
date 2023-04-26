@@ -13,7 +13,7 @@ char **prompt()
 	char *delim = " ";
 	char **args = malloc(sizeof(char *) * n);
 	int r, k = 0;
-	char *promt_str = "#cisfun$ ";
+	char *promt_str = "$ ";
 	int j = str_len(promt_str);
 
 	write(1, promt_str, j);
