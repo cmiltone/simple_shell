@@ -105,6 +105,7 @@ int check_builtin(char **args)
 		if (args[1] != NULL)
 		{
 			int exit_status = atoi(args[1]);
+
 			exit(exit_status);
 		}
 		else
