@@ -9,11 +9,12 @@
 #include <sys/wait.h>
 #include <stdio.h>
 
-/*#ifdef _WIN32
-  #define PATH_SEPARATOR ";"
-#else
-  #define PATH_SEPARATOR ":"
-#endif
+/**
+ * #ifdef _WIN32
+ * #define PATH_SEPARATOR ";"
+ * #else
+ * #define PATH_SEPARATOR ":"
+ * #endif
 */
 
 #ifdef _WIN32
@@ -23,10 +24,10 @@
 #endif
 
 void shell(char *filename);
-void exec_command(char *args[], char* filename);
+void exec_command(char *args[], char *filename);
 char **prompt();
 int str_len(char *s);
-int str_cmp(char * a, char *b);
+int str_cmp(char *a, char *b);
 int str_contains(char *a, char *b);
 char *get_env(char *e);
 char **get_path_cmds();
