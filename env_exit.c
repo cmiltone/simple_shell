@@ -43,7 +43,16 @@ int check_builtin(char **args)
 {
 	if (strcmp(args[0], "exit") == 0)
 	{
+		if (args[1] != NULL)
+		{
+			int exit_status = atoi(args[1]);
+
+			exit(exit_status);
+		}
+		else
+	{
 		exit(0);
+	}
 	}
 	else if (strcmp(args[0], "env") == 0)
 	{
