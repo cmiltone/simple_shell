@@ -18,7 +18,7 @@ char **prompt()
 
 	write(1, promt_str, j);
 
-	r = _getline(&cmd, &n, stdin);
+	r = getline(&cmd, &n, stdin);
 
 	if (r == -1)
 		return (NULL);
