@@ -52,10 +52,10 @@ void shell(char *filename)
 		if (cmd == NULL)
 		{
 			write(STDOUT_FILENO, "\n", 1);
-			_exit(1); /*TODO: fix bug*/
-		}
-
-		exec_command(cmd, filename);
+			/*_exit(1); TODO: fix bug*/
+			break;
+		} else
+			exec_command(cmd, filename);
 	}
 }
 
