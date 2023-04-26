@@ -4,21 +4,36 @@
  * exec_command - executes a command with or without args
  * @args: command and list of arguments
  * @filename: the name of the program file
- * Return: void
+ * Return: 0 on error else 1
 */
 
-void exec_command(char *args[], char *filename)
+int exec_command(char *args[], char *filename)
 {
 	char *cmd = args[0];
 	int k;
+	pid_t pid;
+	int status;
 
-	k = execve(cmd, args, environ);
-
-	if (k == -1)
+	if ((pid = fork()) < 0)
 	{
 		perror(filename);
-		free((*args));
+		return (0);
 	}
+	else if (pid == 0)
+	{
+		k = execve(cmd, args, environ);
+
+		if (k == -1)
+		{
+			perror(filename);
+			free((*args));
+			return (0);
+		}
+	}
+	else
+		waitpid(pid, &status, 0);
+
+	return (1);
 }
 
 /**
@@ -29,31 +44,29 @@ void exec_command(char *args[], char *filename)
 
 void shell(char *filename)
 {
-	pid_t pid;
 	char **cmd = NULL;
-	int status;
 
 	while (1)
 	{
 		cmd = prompt();
 		if (cmd == NULL)
 		{
-			if (isatty(STDIN_FILENO))
-				write(STDOUT_FILENO, "\n", 2);
-			break; /*maybe exit?*/
+			write(STDOUT_FILENO, "\n", 1);
+			_exit(1); /*TODO: fix bug*/
 		}
-		pid = fork();
-		if (pid > 0)
-			waitpid(pid, &status, 0);
-		if (pid == -1)
+
+		if (check_builtin(cmd) == 1)
+			continue;
+		else if (access(cmd[0], X_OK) != 0)
 		{
-			perror(filename);
-			break;
+			cmd[0] = get_command_in_path(cmd[0]);
+			if (cmd[0] == NULL)
+			{
+				perror(filename);
+				continue;
+			}
 		}
-		if (pid == 0)
-			exec_command(cmd, filename);
-		else
-			wait(0);
+		exec_command(cmd, filename);
 	}
 }
 

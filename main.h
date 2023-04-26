@@ -12,6 +12,7 @@ extern char **environ;
 #include <sys/wait.h>
 #include <stdio.h>
 #include <errno.h>
+#include <signal.h>
 
 #ifdef _WIN32
   #define ON_WIN 1
@@ -21,7 +22,7 @@ extern char **environ;
 
 /* Function prototypes*/
 void shell(char *filename);
-void exec_command(char *args[], char *filename);
+int exec_command(char *args[], char *filename);
 char **prompt();
 size_t str_len(char *s);
 int str_cmp(char *a, char *b);
