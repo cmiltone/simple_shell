@@ -7,22 +7,19 @@
  * Return: void
 */
 
-void exec_command(char *args[], char* filename)
+void exec_command(char *args[], char *filename)
 {
 	char *cmd = args[0];
-
   int k = execve(cmd, args, __environ);
-  if (k == -1)
-  {
-    perror(filename);
-  }
+
+	if (k == -1)
+		perror(filename);
 }
 
 /**
  * shell - starts interractive shell
  * @filename: name of the executable file
  * Return: void
- * 
 */
 
 void shell(char *filename)
@@ -30,7 +27,7 @@ void shell(char *filename)
 	pid_t pid;
 	char **cmd = NULL;
 
-	while(1)
+	while (1)
 	{
 		cmd = prompt();
 		if (cmd == NULL)
