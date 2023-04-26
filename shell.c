@@ -42,6 +42,7 @@ void shell(char *filename)
 			break; /*maybe exit?*/
 		}
 
+		/**
 		if (access(cmd[0], X_OK) != 0)
 		{
 			cmd[0] = get_command_in_path(cmd[0]);
@@ -52,6 +53,7 @@ void shell(char *filename)
 				continue;
 			}
 		}
+		*/
 
 		pid = fork();
 		if (pid > 0)
