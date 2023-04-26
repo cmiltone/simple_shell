@@ -15,14 +15,14 @@ char **prompt()
 	int r, k = 0;
 	char *promt_str = "#cisfun$ ";
 	int j = str_len(promt_str);
-  
-  write(1, promt_str, j);
 
-  r = _getline(&cmd, &n, stdin);
+	write(1, promt_str, j);
+
+	r = _getline(&cmd, &n, stdin);
 
 	if (r == -1)
-		return(NULL);
-		
+		return (NULL);
+
 	cmd[str_len(cmd) - 1] = '\0';
 
 	if (str_len(cmd) == 0)
@@ -30,7 +30,7 @@ char **prompt()
 
 	token = strtok(cmd, delim);
 
-	while(token != NULL)
+	while (token != NULL)
 	{
 		args[k] = token;
 		k += 1;
