@@ -66,7 +66,7 @@ char **get_path_cmds()
  * get_command_in_path - returns a command
  * in full with based on PATH
  * @cmd: the command
- * Retiurn: the command's full path
+ * Return: the command's full path
 */
 char *get_command_in_path(char *cmd)
 {
