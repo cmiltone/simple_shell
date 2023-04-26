@@ -33,7 +33,7 @@ void shell(char *filename)
 
 	while (1)
 	{
-		cmd = prompt();
+		cmd = prompt(filename);
 		if (cmd == NULL)
 		{
 			if (isatty(STDIN_FILENO))
