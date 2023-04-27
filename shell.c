@@ -48,10 +48,7 @@ void shell(char *filename)
 		if (pid == 0)
 			exec_command(cmd, filename);
 		else
-		{
-			if (cmd == NULL)
-				_exit(0);
-		}
+			wait(0);
 	}
 }
 
