@@ -8,7 +8,7 @@
 char **prompt()
 {
 	char *cmd = NULL, *token,
-	*prompt_str = "$ ",*delim = " ";
+	 *prompt_str = "$ ", *delim = " ";
 	size_t n = 512;
 	char **args = malloc(sizeof(char *) * n);
 	int r, k = 0, w = 0,
