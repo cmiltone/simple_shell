@@ -37,7 +37,7 @@ void shell(char *filename)
 	{
 		cmd = prompt();
 		
-		pid = fork();
+		if (getpgid(pid) < 0) pid = fork();
 		if (pid > 0)
 			waitpid(pid, &status, 0);
 		if (pid == -1)
@@ -49,7 +49,8 @@ void shell(char *filename)
 			exec_command(cmd, filename);
 		else
 		{
-			exit(0);
+			if (cmd == NULL)
+				_exit(0);
 		}
 	}
 }
