@@ -7,18 +7,35 @@
  * Return: 0 on error else 1
 */
 
-void exec_command(char *args[], char *filename)
+int exec_command(char *args[], char *filename)
 {
 	char *cmd = args[0];
-	int k;
+	pid_t pid;
+	int status, k;
 
-	k = execve(cmd, args, environ);
+	pid = fork();
 
-	if (k == -1)
+	if (pid > 0)
+		waitpid(pid, &status, 0);
+	if (pid == -1)
 	{
 		perror(filename);
-		free((*args));
+		return (0);
 	}
+	if (pid == 0)
+	{
+		k = execve(cmd, args, environ);
+
+		if (k == -1)
+		{
+			perror(filename);
+			free((*args));
+		}
+	}
+	else
+		wait(0);
+
+	return (1);
 }
 
 /**
@@ -29,29 +46,13 @@ void exec_command(char *args[], char *filename)
 
 void shell(char *filename)
 {
-	pid_t pid;
 	char **cmd = NULL;
-	int status;
 
 	while (1)
 	{
 		cmd = prompt();
 
-		if (cmd != NULL)
-		{
-			pid = fork();
-			if (pid > 0)
-				waitpid(pid, &status, 0);
-			if (pid == -1)
-			{
-				perror(filename);
-				break;
-			}
-			if (pid == 0)
-				exec_command(cmd, filename);
-			else
-				wait(0);
-		}
+		exec_command(cmd, filename);
 	}
 }
 
