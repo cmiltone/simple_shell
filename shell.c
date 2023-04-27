@@ -37,8 +37,7 @@ void shell(char *filename)
 	{
 		cmd = prompt();
 
-		if (getpgid(pid) < 0)
-			pid = fork();
+		pid = fork();
 		if (pid > 0)
 			waitpid(pid, &status, 0);
 		if (pid == -1)
